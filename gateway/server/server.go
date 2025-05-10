@@ -1,6 +1,9 @@
 package server
 
-import "gateway/gateway/service"
+import (
+	"context"
+	"gateway/gateway/service"
+)
 
 type Server struct {
 	service Service
@@ -11,6 +14,6 @@ func New(service Service) *Server {
 }
 
 type Service interface {
-	Pay(req *service.PayRequest) (*service.PayResponse, error)
-	PayStatus(req *service.PayStatusRequest) (*service.PayStatusResponse, error)
+	Pay(ctx context.Context, req *service.PayRequest) (*service.PayResponse, error)
+	PayStatus(ctx context.Context, req *service.PayStatusRequest) (service.PayStatus, error)
 }

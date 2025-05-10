@@ -3,6 +3,7 @@ package main
 import (
 	"gateway/gateway/server"
 	"github.com/gofiber/contrib/fiberzap/v2"
+	"github.com/gofiber/contrib/swagger"
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 	"log"
@@ -12,6 +13,7 @@ func main() {
 	app := fiber.New()
 	s := server.New(nil)
 
+	app.Use(swagger.New())
 	addRoutes(app, s)
 	initLogger(app)
 
