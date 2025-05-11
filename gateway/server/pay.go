@@ -3,7 +3,7 @@ package server
 import (
 	"encoding/json"
 	"fmt"
-	"gateway/gateway/service"
+	"gateway/service"
 	"github.com/gofiber/fiber/v2"
 )
 

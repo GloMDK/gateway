@@ -9,19 +9,26 @@ type Service struct {
 	transactionsClient TransactionsClient
 }
 
+func New(ratesClient RatesClient, transactionsClient TransactionsClient) *Service {
+	return &Service{
+		ratesClient:        ratesClient,
+		transactionsClient: transactionsClient,
+	}
+}
+
 type BankClient interface {
 	Pay(ctx context.Context, req *PayRequest) (PayStatus, error)
 	PayStatus(ctx context.Context, req *PayStatusRequest) (PayStatus, error)
-	GetBankName() string
+	GetBankName() BankName
 }
 
 type RatesClient interface {
-	ChooseBankClient(ctx context.Context, req *PayRequest) (BankClient, error)
-	GetBankClientByName(ctx context.Context, bankName string) (BankClient, error)
+	ChooseBankClient(ctx context.Context, req *ChooseBankClientRequest) (BankClient, error)
+	GetBankClientByName(bankName BankName) (BankClient, error)
 }
 
 type TransactionsClient interface {
-	GetTransaction(ctx context.Context, payID string) (*GetTransactionResponse, error)
+	Get(ctx context.Context, payID string) (*GetTransactionResponse, error)
 	Create(ctx context.Context, req *CreateTransactionRequest) (payID string, err error)
-	Update(ctx context.Context, req *TransactionUpdateRequest) error
+	Update(ctx context.Context, req *UpdateTransactionRequest) error
 }

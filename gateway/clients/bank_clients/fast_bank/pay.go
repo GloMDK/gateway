@@ -2,7 +2,7 @@ package fast_bank
 
 import (
 	"context"
-	"gateway/gateway/service"
+	"gateway/service"
 	"time"
 )
 

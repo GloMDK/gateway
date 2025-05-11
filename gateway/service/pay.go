@@ -7,7 +7,11 @@ import (
 )
 
 func (s *Service) Pay(ctx context.Context, req *PayRequest) (*PayResponse, error) {
-	bankClient, err := s.ratesClient.ChooseBankClient(ctx, req)
+	bankClient, err := s.ratesClient.ChooseBankClient(ctx, &ChooseBankClientRequest{
+		Pan:          req.Pan,
+		Amount:       req.Amount,
+		CurrencyCode: req.CurrencyCode,
+	})
 	if err != nil {
 		return nil, fmt.Errorf("ratesClient.ChooseBankClient error: %w", err)
 	}
@@ -16,6 +20,7 @@ func (s *Service) Pay(ctx context.Context, req *PayRequest) (*PayResponse, error
 		Amount:       req.Amount,
 		CurrencyCode: req.CurrencyCode,
 		BankName:     bankClient.GetBankName(),
+		Status:       PayStatusNew,
 	})
 	if err != nil {
 		return nil, fmt.Errorf("transactionsClient.Create error: %w", err)
@@ -23,7 +28,7 @@ func (s *Service) Pay(ctx context.Context, req *PayRequest) (*PayResponse, error
 
 	payStatus, err := bankClient.Pay(ctx, req)
 	if err != nil {
-		updateErr := s.transactionsClient.Update(ctx, &TransactionUpdateRequest{
+		updateErr := s.transactionsClient.Update(ctx, &UpdateTransactionRequest{
 			Status: PayStatusFail,
 			PayID:  payID,
 		})
@@ -33,7 +38,7 @@ func (s *Service) Pay(ctx context.Context, req *PayRequest) (*PayResponse, error
 		return nil, fmt.Errorf("bankClient.Pay error: %w", err)
 	}
 
-	err = s.transactionsClient.Update(ctx, &TransactionUpdateRequest{
+	err = s.transactionsClient.Update(ctx, &UpdateTransactionRequest{
 		Status: payStatus,
 		PayID:  payID,
 	})

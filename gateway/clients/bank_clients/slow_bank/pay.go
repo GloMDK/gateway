@@ -1,12 +1,12 @@
-package fast_bank
+package slow_bank
 
 import (
 	"context"
-	"gateway/gateway/service"
+	"gateway/service"
 	"time"
 )
 
 func (c *SlowBankClient) Pay(ctx context.Context, req *service.PayRequest) (service.PayStatus, error) {
-	time.Sleep(30 * time.Second)
+	time.Sleep(29 * time.Second)
 	return getRandomStatusOrError()
 }

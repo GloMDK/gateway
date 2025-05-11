@@ -1,0 +1,7 @@
+services:
+  gateway:
+    build:
+      context: ./../gateway
+      dockerfile: ../.docker/gateway/Dockerfile
+    ports:
+      - "3000:3000"

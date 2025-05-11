@@ -26,18 +26,27 @@ const (
 	PayStatusNew
 )
 
-type TransactionUpdateRequest struct {
-	Status PayStatus
-	PayID  string
+type UpdateTransactionRequest struct {
+	Status PayStatus `json:"status"`
+	PayID  string    `json:"-"`
 }
 
 type CreateTransactionRequest struct {
-	Amount       float64
-	CurrencyCode uint16
-	BankName     string
+	Amount       float64   `json:"amount"`
+	CurrencyCode uint16    `json:"currency_code"`
+	BankName     BankName  `json:"bank_name"`
+	Status       PayStatus `json:"status"`
 }
 
 type GetTransactionResponse struct {
-	Status   PayStatus
-	BankName string
+	Status   PayStatus `json:"status"`
+	BankName BankName  `json:"bank_name"`
+}
+
+type BankName string
+
+type ChooseBankClientRequest struct {
+	Pan          string  `json:"pan"`
+	Amount       float64 `json:"amount"`
+	CurrencyCode uint16  `json:"currency_code"`
 }

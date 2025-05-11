@@ -2,10 +2,12 @@ package fast_bank
 
 import (
 	"fmt"
-	"gateway/gateway/service"
+	"gateway/service"
 	"math/rand/v2"
 	"net/http"
 )
+
+const bankName = "FastBank"
 
 type FastBankClient struct {
 	httpClient HTTPClient
@@ -15,8 +17,8 @@ type HTTPClient interface {
 	Do(*http.Request) (*http.Response, error)
 }
 
-func (c *FastBankClient) GetBankName() string {
-	return "FastBank"
+func (c *FastBankClient) GetBankName() service.BankName {
+	return bankName
 }
 
 func New(httpClient HTTPClient) *FastBankClient {

@@ -7,14 +7,14 @@ import (
 )
 
 func (s *Service) PayStatus(ctx context.Context, req *PayStatusRequest) (PayStatus, error) {
-	transaction, err := s.transactionsClient.GetTransaction(ctx, req.PayID)
+	transaction, err := s.transactionsClient.Get(ctx, req.PayID)
 	if err != nil {
 		log.Info(fmt.Sprintf("payID: %v, transactionsClient.Update error: %v", req.PayID, err))
 	} else if transaction.Status == PayStatusSuccess || transaction.Status == PayStatusFail {
 		return transaction.Status, nil
 	}
 
-	bankClient, err := s.ratesClient.GetBankClientByName(ctx, transaction.BankName)
+	bankClient, err := s.ratesClient.GetBankClientByName(transaction.BankName)
 	if err != nil {
 		return transaction.Status, fmt.Errorf("ratesClient.GetBankClientByName error: %w", err)
 	}
@@ -25,7 +25,7 @@ func (s *Service) PayStatus(ctx context.Context, req *PayStatusRequest) (PayStat
 	}
 
 	if bankStatus != transaction.Status {
-		err = s.transactionsClient.Update(ctx, &TransactionUpdateRequest{
+		err = s.transactionsClient.Update(ctx, &UpdateTransactionRequest{
 			Status: bankStatus,
 			PayID:  req.PayID,
 		})

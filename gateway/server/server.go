@@ -2,7 +2,7 @@ package server
 
 import (
 	"context"
-	"gateway/gateway/service"
+	"gateway/service"
 )
 
 type Server struct {
