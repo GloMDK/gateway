@@ -1,0 +1,33 @@
+package main
+
+import (
+	"github.com/gofiber/contrib/fiberzap/v2"
+	"github.com/gofiber/fiber/v2"
+	"go.uber.org/zap"
+	"log"
+	"rates/server"
+)
+
+func main() {
+	app := fiber.New()
+	appServer := server.New(nil)
+
+	addRoutes(app, appServer)
+	initLogger(app)
+
+	log.Fatal(app.Listen(":3000"))
+}
+
+func addRoutes(app *fiber.App, s *server.Server) {
+	app.Post("/update_param", s.UpdateParam)
+	app.Get("/choose_bank_name", s.ChooseBankName)
+}
+
+func initLogger(app *fiber.App) {
+	logger, _ := zap.NewProduction()
+	defer logger.Sync()
+
+	app.Use(fiberzap.New(fiberzap.Config{
+		Logger: logger,
+	}))
+}

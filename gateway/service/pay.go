@@ -8,8 +8,6 @@ import (
 
 func (s *Service) Pay(ctx context.Context, req *PayRequest) (*PayResponse, error) {
 	bankClient, err := s.ratesClient.ChooseBankClient(ctx, &ChooseBankClientRequest{
-		Pan:          req.Pan,
-		Amount:       req.Amount,
 		CurrencyCode: req.CurrencyCode,
 	})
 	if err != nil {

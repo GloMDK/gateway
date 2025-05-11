@@ -1,2 +1,2 @@
 up:
-	docker compose -f ./.docker/docker-compose.yml up --force-recreate
+	docker compose -f ./.docker/docker-compose.yml up

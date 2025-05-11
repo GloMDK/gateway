@@ -46,7 +46,5 @@ type GetTransactionResponse struct {
 type BankName string
 
 type ChooseBankClientRequest struct {
-	Pan          string  `json:"pan"`
-	Amount       float64 `json:"amount"`
-	CurrencyCode uint16  `json:"currency_code"`
+	CurrencyCode uint16 `json:"currency_code"`
 }
