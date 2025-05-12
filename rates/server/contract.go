@@ -11,6 +11,10 @@ type Rates struct {
 	RateValue RateValue `json:"rate_value"`
 }
 
+type ChooseBankNameRequest struct {
+	CurrencyCode CurrencyCode `json:"currency_code"`
+}
+
 type RateValue float64
 type BankName string
 type CurrencyCode uint16

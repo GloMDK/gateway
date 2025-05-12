@@ -13,6 +13,6 @@ func New(cache CacheClient) *Server {
 }
 
 type CacheClient interface {
-	Set(ctx context.Context, key string, val string) error
-	Get(ctx context.Context, key string) (string, error)
+	Set(ctx context.Context, key string, val []byte) error
+	Get(ctx context.Context, key string) ([]byte, error)
 }

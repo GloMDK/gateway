@@ -14,7 +14,7 @@ func (s *Server) UpdateParam(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusUnprocessableEntity, fmt.Sprintf("json.Unmarshal error: %v", err))
 	}
 
-	err = s.cache.Set(c.UserContext(), RatesParameterCacheKey, string(body))
+	err = s.cache.Set(c.UserContext(), RatesParameterCacheKey, body)
 	if err != nil {
 		return fiber.NewError(fiber.StatusInternalServerError, fmt.Sprintf("cache.Set error: %v", err))
 	}

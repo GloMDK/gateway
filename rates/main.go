@@ -5,17 +5,19 @@ import (
 	"github.com/gofiber/fiber/v2"
 	"go.uber.org/zap"
 	"log"
+	"rates/cache_client"
 	"rates/server"
 )
 
 func main() {
 	app := fiber.New()
-	appServer := server.New(nil)
+	cache := cache_client.New()
+	appServer := server.New(cache)
 
 	addRoutes(app, appServer)
 	initLogger(app)
 
-	log.Fatal(app.Listen(":3000"))
+	log.Fatal(app.Listen(":3001"))
 }
 
 func addRoutes(app *fiber.App, s *server.Server) {

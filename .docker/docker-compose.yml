@@ -5,3 +5,9 @@ services:
       dockerfile: ../.docker/gateway/Dockerfile
     ports:
       - "3000:3000"
+  rates:
+    build:
+      context: ./../rates
+      dockerfile: ../.docker/rates/Dockerfile
+    ports:
+      - "3001:3001"
