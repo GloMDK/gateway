@@ -48,8 +48,8 @@ func initService() server.Service {
 	}
 	slowBankClient := slow_bank.New(nil)
 	fastBankClient := fast_bank.New(nil)
-	ratesClient := rates_client.New("rates", httpClient, slowBankClient, fastBankClient)
-	transactionsClient := transactions_client.New("transactions", httpClient)
+	ratesClient := rates_client.New("http://rates:3001", httpClient, slowBankClient, fastBankClient)
+	transactionsClient := transactions_client.New("http://transactions:3002", httpClient)
 
 	return service.New(ratesClient, transactionsClient)
 }

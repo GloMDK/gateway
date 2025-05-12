@@ -2,12 +2,36 @@ services:
   gateway:
     build:
       context: ./../gateway
-      dockerfile: ../.docker/gateway/Dockerfile
+      dockerfile: ../.docker/Dockerfile
     ports:
       - "3000:3000"
+    depends_on:
+      - rates
+      - transactions
+
   rates:
     build:
       context: ./../rates
-      dockerfile: ../.docker/rates/Dockerfile
+      dockerfile: ../.docker/Dockerfile
     ports:
       - "3001:3001"
+
+  transactions:
+    build:
+      context: ./../transactions
+      dockerfile: ../.docker/Dockerfile
+    ports:
+      - "3002:3002"
+    depends_on:
+      - db
+
+  db:
+    image: postgres:latest
+    environment:
+      POSTGRES_DB: "transactions"
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+    ports:
+      - "5432:5432"
+    volumes:
+      - ./db_init_sql:/docker-entrypoint-initdb.d/

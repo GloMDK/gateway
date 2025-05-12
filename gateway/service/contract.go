@@ -4,7 +4,7 @@ type PayRequest struct {
 	Amount       float64 `json:"amount"`
 	CurrencyCode uint16  `json:"currency_code"`
 	Pan          string  `json:"pan"`
-	CVV          string  `json:"CVV"`
+	CVV          string  `json:"cvv"`
 	Expired      string  `json:"expired"`
 }
 
