@@ -3,7 +3,7 @@ package server
 const RatesParameterCacheKey = "rates"
 
 type RatesParameter struct {
-	Rates map[CurrencyCode][]Rates `json:"rates"`
+	Rates map[CurrencyCodeString][]Rates `json:"rates"`
 }
 
 type Rates struct {
@@ -12,9 +12,10 @@ type Rates struct {
 }
 
 type ChooseBankNameRequest struct {
-	CurrencyCode CurrencyCode `json:"currency_code"`
+	CurrencyCode CurrencyCodeUint `json:"currency_code"`
 }
 
 type RateValue float64
 type BankName string
-type CurrencyCode uint16
+type CurrencyCodeUint uint16
+type CurrencyCodeString string

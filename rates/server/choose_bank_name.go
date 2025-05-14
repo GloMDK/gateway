@@ -4,6 +4,7 @@ import (
 	"encoding/json"
 	"fmt"
 	"github.com/gofiber/fiber/v2"
+	"strconv"
 )
 
 func (s *Server) ChooseBankName(c *fiber.Ctx) error {
@@ -23,7 +24,7 @@ func (s *Server) ChooseBankName(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusInternalServerError, fmt.Sprintf("json.Unmarshal error: %v", err))
 	}
 
-	banks, found := param.Rates[req.CurrencyCode]
+	banks, found := param.Rates[CurrencyCodeString(strconv.Itoa(int(req.CurrencyCode)))]
 	if !found {
 		return fiber.NewError(fiber.StatusNotFound, fmt.Sprintf("no such currency in parameter: %v", req.CurrencyCode))
 	}

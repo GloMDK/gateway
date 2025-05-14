@@ -1,6 +1,6 @@
 CREATE SCHEMA transactions;
 CREATE TABLE transactions.transactions(
-    id integer PRIMARY KEY,
+    id SERIAL PRIMARY KEY,
     currency_code integer,
     amount float,
     bank_name varchar(300),

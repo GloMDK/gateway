@@ -8,7 +8,7 @@ import (
 )
 
 func (s *Server) Create(c *fiber.Ctx) error {
-	newTrans := &Transaction{}
+	newTrans := &Transactions{}
 	body := c.Body()
 	err := json.Unmarshal(body, newTrans)
 	if err != nil {
@@ -16,7 +16,7 @@ func (s *Server) Create(c *fiber.Ctx) error {
 	}
 
 	s.db.Create(newTrans)
-	resp := strconv.Itoa(newTrans.ID)
+	resp := strconv.Itoa(int(newTrans.ID))
 
 	return c.Status(fiber.StatusOK).Send([]byte(resp))
 }

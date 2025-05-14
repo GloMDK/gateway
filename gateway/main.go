@@ -29,7 +29,7 @@ func main() {
 
 func addRoutes(app *fiber.App, s *server.Server) {
 	app.Post("/pay", s.Pay)
-	app.Get("/pay_status", s.PayStatus)
+	app.Get("/pay_status/+", s.PayStatus)
 }
 
 func initLogger(app *fiber.App) {

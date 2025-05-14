@@ -1,14 +1,21 @@
 package transactions_client
 
 import (
+	"bytes"
 	"context"
+	"encoding/json"
 	"fmt"
 	"gateway/service"
 	"net/http"
 )
 
 func (t *TransactionsClient) Update(ctx context.Context, req *service.UpdateTransactionRequest) error {
-	httpReq, err := http.NewRequestWithContext(ctx, http.MethodPatch, t.host+"/"+req.PayID, nil)
+	reqBody, err := json.Marshal(req)
+	if err != nil {
+		return fmt.Errorf("json.Marshal error: %w", err)
+	}
+
+	httpReq, err := http.NewRequestWithContext(ctx, http.MethodPatch, t.host+"/"+req.PayID, bytes.NewBuffer(reqBody))
 	if err != nil {
 		return fmt.Errorf("http.NewRequestWithContext error: %w", err)
 	}

@@ -8,10 +8,8 @@ import (
 )
 
 func (s *Server) PayStatus(c *fiber.Ctx) error {
-	serviceReq := &service.PayStatusRequest{}
-	err := json.Unmarshal(c.Body(), serviceReq)
-	if err != nil {
-		return fiber.NewError(fiber.StatusUnprocessableEntity, fmt.Sprintf("json.Unmarshal error: %v", err))
+	serviceReq := &service.PayStatusRequest{
+		PayID: c.Params("+"),
 	}
 	resp, err := s.service.PayStatus(c.UserContext(), serviceReq)
 	if err != nil {

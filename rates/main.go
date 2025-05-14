@@ -21,8 +21,9 @@ func main() {
 }
 
 func addRoutes(app *fiber.App, s *server.Server) {
-	app.Post("/update_param", s.UpdateParam)
-	app.Get("/choose_bank_name", s.ChooseBankName)
+	app.Get("/param", s.GetParam)
+	app.Patch("/param", s.UpdateParam)
+	app.Post("/choose_bank_name", s.ChooseBankName)
 }
 
 func initLogger(app *fiber.App) {

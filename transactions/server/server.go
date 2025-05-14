@@ -12,7 +12,7 @@ type Server struct {
 func New() (*Server, error) {
 	db, err := gorm.Open(
 		postgres.New(
-			postgres.Config{DSN: "host=db user=postgres password=postgres dbname=transactions port=5432"},
+			postgres.Config{DSN: "host=db user=postgres password=postgres dbname=transactions port=5432 search_path=transactions"},
 		),
 		&gorm.Config{},
 	)

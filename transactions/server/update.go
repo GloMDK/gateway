@@ -14,7 +14,7 @@ func (s *Server) Update(c *fiber.Ctx) error {
 		return fiber.NewError(fiber.StatusUnprocessableEntity, fmt.Sprintf("json.Unmarshal error: %v", err))
 	}
 
-	s.db.Model(&Transaction{}).Where("id = ?", c.Params("+")).Update("status", req.Status)
+	s.db.Model(&Transactions{}).Where("id = ?", c.Params("+")).Update("status", req.Status)
 
 	return c.SendStatus(fiber.StatusOK)
 }

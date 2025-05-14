@@ -9,8 +9,9 @@ import (
 func (s *Service) PayStatus(ctx context.Context, req *PayStatusRequest) (PayStatus, error) {
 	transaction, err := s.transactionsClient.Get(ctx, req.PayID)
 	if err != nil {
-		log.Info(fmt.Sprintf("payID: %v, transactionsClient.Update error: %v", req.PayID, err))
-	} else if transaction.Status == PayStatusSuccess || transaction.Status == PayStatusFail {
+		return 0, fmt.Errorf("payID: %v, transactionsClient.Get error: %w", req.PayID, err)
+	}
+	if transaction.Status == PayStatusSuccess || transaction.Status == PayStatusFail {
 		return transaction.Status, nil
 	}
 
