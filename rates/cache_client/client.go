@@ -13,8 +13,31 @@ type InMemoryCacheClient struct {
 
 func New() *InMemoryCacheClient {
 	return &InMemoryCacheClient{
-		memory: map[string][]byte{},
-		mutex:  &sync.RWMutex{},
+		memory: map[string][]byte{
+			"rates": []byte(`
+{
+    "rates": {
+        "123": [
+            {
+                "bank_name": "FastBank",
+                "rate_value": 0.3
+            },
+            {
+                "bank_name": "SlowBank",
+                "rate_value": 0.5
+            }
+        ],
+		"321": [
+            {
+                "bank_name": "UnknownBank",
+                "rate_value": 1
+            }
+        ]
+    }
+}
+`),
+		},
+		mutex: &sync.RWMutex{},
 	}
 }
 

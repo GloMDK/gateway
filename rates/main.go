@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gofiber/contrib/fiberzap/v2"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"go.uber.org/zap"
 	"log"
 	"rates/cache_client"
@@ -13,6 +14,10 @@ func main() {
 	app := fiber.New()
 	cache := cache_client.New()
 	appServer := server.New(cache)
+
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "*",
+	}))
 
 	addRoutes(app, appServer)
 	initLogger(app)

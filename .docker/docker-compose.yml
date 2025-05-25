@@ -35,3 +35,11 @@ services:
       - "5432:5432"
     volumes:
       - ./db_init_sql:/docker-entrypoint-initdb.d/
+
+  nginx:
+    build:
+      context: ./../../gateway
+      dockerfile: .docker/nginx/Dockerfile
+    ports:
+      - "8080:80"
+

@@ -1,0 +1,30 @@
+<mat-list>
+  @for (rate of rates|keyvalue; track rate.key) {
+    @if (rate) {
+      <mat-list-item></mat-list-item>
+      <h3 matListItemTitle>{{rate.key}}</h3>
+      <mat-action-list>
+        <button mat-list-item (click)="deleteRate(rate.key)">Delete</button>
+        <button mat-list-item (click)="editRate(rate.key)">Edit</button>
+        <button mat-list-item (click)="addBank(rate.key)">Add Bank</button>
+      </mat-action-list>
+      @for (bank of rate.value; track bank) {
+        @if (bank) {
+          <div matListItemLine>
+            <p>Bank name - {{bank.bank_name}}</p>
+            <p>Rate value - {{bank.rate_value}}</p>
+          </div>
+          <mat-action-list>
+            <button mat-list-item (click)="deleteBank(rate.key, $index)">Delete</button>
+            <button mat-list-item (click)="editBank(rate.key, $index)">Edit</button>
+          </mat-action-list>
+        }
+      }
+    }
+  }
+</mat-list>
+<mat-action-list>
+  <button mat-list-item (click)="addRate()">Add Rate</button>
+  <button mat-list-item (click)="save()">Save</button>
+</mat-action-list>
+
