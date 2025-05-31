@@ -25,6 +25,7 @@ func addRoutes(app *fiber.App, s *server.Server) {
 	app.Get("/+", s.Get)
 	app.Post("/", s.Create)
 	app.Patch("/+", s.Update)
+	app.Get("/all", s.GetAll)
 }
 func initLogger(app *fiber.App) {
 	logger, _ := zap.NewProduction()
