@@ -1,4 +1,4 @@
-import {Component, inject, Injectable, Input, model, OnInit} from '@angular/core';
+import {Component, inject, Injectable, OnInit} from '@angular/core';
 import {HttpClient} from "@angular/common/http";
 import {
   MatActionList,
@@ -43,8 +43,6 @@ export class RatesComponent implements OnInit {
   public rates: Map<string, Bank[]> = new Map<string, Bank[]>([]).set("", []);
 
   readonly dialog = inject(MatDialog);
-
-  @Input() newRates!: string;
 
   public ngOnInit() {
     this.http.get<Rates>('http://localhost:8080/api/rates/param').subscribe(rates => {
@@ -106,7 +104,8 @@ export class RatesComponent implements OnInit {
   }
 
   save() {
-    this.http.patch('http://localhost:8080/api/rates/param', {"rates": this.rates}, { observe: 'response' , responseType: 'text'}).subscribe(response => {
+    const objFromMap = Object.fromEntries(this.rates);
+    this.http.patch('http://localhost:8080/api/rates/param', {"rates": objFromMap}, { observe: 'response' , responseType: 'text'}).subscribe(response => {
       if (response.status != 200) {
         console.error('Error occurred while saving rates.');
       }
@@ -194,7 +193,7 @@ export class EditBankDialog {
   }
 
   returnNewBank(): Bank {
-    return {"bank_name": this.newBankName, "rate_value": this.newRate}
+    return {"bank_name": this.newBankName, "rate_value": Number(this.newRate)}
   }
 }
 
@@ -325,7 +324,7 @@ export class AddBankDialog {
   }
 
   returnNewBank(): Bank {
-    return {"bank_name": this.newBankName, "rate_value": this.newRate}
+    return {"bank_name": this.newBankName, "rate_value": Number(this.newRate)}
   }
 }
 

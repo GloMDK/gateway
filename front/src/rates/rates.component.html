@@ -1,6 +1,6 @@
 <mat-list>
   @for (rate of rates|keyvalue; track rate.key) {
-    @if (rate) {
+    @if (rate.key != "" && rate) {
       <mat-list-item></mat-list-item>
       <h3 matListItemTitle>{{rate.key}}</h3>
       <mat-action-list>

@@ -10,7 +10,7 @@ import (
 )
 
 func (t *TransactionsClient) Get(ctx context.Context, payID string) (*service.GetTransactionResponse, error) {
-	httpReq, err := http.NewRequestWithContext(ctx, http.MethodGet, t.host+"/"+payID, nil)
+	httpReq, err := http.NewRequestWithContext(ctx, http.MethodGet, t.host+"/one/"+payID, nil)
 	if err != nil {
 		return nil, fmt.Errorf("http.NewRequestWithContext error: %w", err)
 	}

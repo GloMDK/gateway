@@ -1,1 +1,17 @@
-<p>shop works!</p>
+<mat-action-list>
+  <button mat-list-item (click)="pay()">Создать новую оплату</button>
+  <button mat-list-item (click)="refreshTransactions()">Обновить список транзакций</button>
+</mat-action-list>
+<mat-list>
+  @for (trans of transactions; track $index) {
+    @if (trans) {
+      <div matListItemLine>
+        <p>ID - {{trans.id}} Код валюты - {{trans.currency_code}} Сумма - {{trans.amount}} Имя банка - {{trans.bank_name}} Статус - {{trans.status}} Время - {{trans.created_at}}</p>
+      </div>
+      <mat-action-list>
+        <button mat-list-item (click)="updateStatus(trans.id, $index)">Обновить статус транзакции</button>
+      </mat-action-list>
+      }
+    }
+</mat-list>
+

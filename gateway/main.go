@@ -9,6 +9,7 @@ import (
 	"gateway/service"
 	"github.com/gofiber/contrib/fiberzap/v2"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"go.uber.org/zap"
 	"log"
 	"net/http"
@@ -20,7 +21,10 @@ func main() {
 	appService := initService()
 	appServer := server.New(appService)
 
-	// app.Use(swagger.New())
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "*",
+	}))
+
 	addRoutes(app, appServer)
 	initLogger(app)
 

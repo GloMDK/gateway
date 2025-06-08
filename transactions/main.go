@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/gofiber/contrib/fiberzap/v2"
 	"github.com/gofiber/fiber/v2"
+	"github.com/gofiber/fiber/v2/middleware/cors"
 	"go.uber.org/zap"
 	"log"
 	"transactions/server"
@@ -15,6 +16,10 @@ func main() {
 		log.Fatal(err)
 	}
 
+	app.Use(cors.New(cors.Config{
+		AllowOrigins: "*",
+	}))
+
 	addRoutes(app, appServer)
 	initLogger(app)
 
@@ -22,7 +27,7 @@ func main() {
 }
 
 func addRoutes(app *fiber.App, s *server.Server) {
-	app.Get("/+", s.Get)
+	app.Get("/one/+", s.Get)
 	app.Post("/", s.Create)
 	app.Patch("/+", s.Update)
 	app.Get("/all", s.GetAll)
